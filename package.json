@@ -1,0 +1,27 @@
+{
+  "name": "guide-to-step-functions",
+  "version": "1.0.0",
+  "description": "Useful links",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaehyeon-kim/guide-to-step-functions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaehyeon-kim/guide-to-step-functions/issues"
+  },
+  "homepage": "https://github.com/jaehyeon-kim/guide-to-step-functions#readme",
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "prettier": "^2.2.1",
+    "serverless-step-functions": "^2.29.0"
+  }
+}
