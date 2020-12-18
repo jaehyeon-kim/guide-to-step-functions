@@ -41,3 +41,10 @@ bash ./init.sh
 sls create -t aws-nodejs
 npm install -D serverless-step-functions
 ```
+
+Invoke step function
+
+```sh
+# sls invoke stepf --name <stepfunctionname> --data '{"foo":"bar"}'
+sls invoke stepf --name hello --data '{"name": "jaehyeon"}'
+```

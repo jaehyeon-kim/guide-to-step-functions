@@ -6,7 +6,22 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-southeast-2'}
 
 functions:
   hello:
     handler: handler.hello
+
+stepFunctions:
+  stateMachines:
+    hello:
+      name: hello
+      definition:
+        Comment: hello world example
+        StartAt: SayHello
+        States:
+          SayHello:
+            Type: Task
+            Resource: !GetAtt hello.Arn
+            End: true
