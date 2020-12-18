@@ -31,8 +31,8 @@ stepFunctions:
             Type: Task
             Resource: !GetAtt hello.Arn
             End: true
-    simple-maths:
-      name: simple-maths
+    function-chaining:
+      name: function-chaining
       definition:
         Comment: example to demonstrate function chaining
         StartAt: Add
@@ -46,22 +46,45 @@ stepFunctions:
             Resource: !GetAtt double.Arn
             End: true
             Retry:
-              - ErrorEquals: [NumberIsSoBig]
-                MaxAttempts: 0
               - ErrorEquals: [NumberIsTooBig]
                 MaxAttempts: 0
               - ErrorEquals: [States.ALL]
                 MaxAttempts: 3
             Catch:
-              - ErrorEquals: [NumberIsSoBig]
-                Next: DefaultResponse
+              # - ErrorEquals: [NumberIsTooBig]
+              #   Next: DefaultResponse
               - ErrorEquals: [NumberIsTooBig]
                 Next: DoubleBigNumber
           DoubleBigNumber:
             Type: Task
             Resource: !GetAtt doubleBigNumber.Arn
             End: true
-          DefaultResponse:
-            Type: Pass
-            Result: 42
+          # DefaultResponse:
+          #   Type: Pass
+          #   Result: 42
+          #   End: true
+    function-branching:
+      name: function-branching
+      definition:
+        Comment: example to demonstrate function chaining
+        StartAt: Add
+        States:
+          Add:
+            Type: Task
+            Resource: !GetAtt add.Arn
+            Next: IsBigNumber
+          IsBigNumber:
+            Type: Choice
+            Choices:
+              - Variable: $
+                NumericGreaterThan: 50
+                Next: DoubleBigNumber
+            Default: Double
+          Double:
+            Type: Task
+            Resource: !GetAtt double.Arn
+            End: true
+          DoubleBigNumber:
+            Type: Task
+            Resource: !GetAtt doubleBigNumber.Arn
             End: true
