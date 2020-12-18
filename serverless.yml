@@ -88,3 +88,35 @@ stepFunctions:
             Type: Task
             Resource: !GetAtt doubleBigNumber.Arn
             End: true
+    parallel-tasks:
+      name: parallel-tasks
+      definition:
+        Comment: parallel tasks demonstration
+        StartAt: Parallel
+        States:
+          Parallel:
+            Type: Parallel
+            End: true
+            Branches:
+              - StartAt: Add
+                States:
+                  Add:
+                    Type: Task
+                    Resource: !GetAtt add.Arn
+                    Next: Double
+                  Double:
+                    Type: Task
+                    Resource: !GetAtt double.Arn
+                    End: true
+                    Retry:
+                      - ErrorEquals: [NumberIsTooBig]
+                        MaxAttempts: 0
+                      - ErrorEquals: [States.ALL]
+                        MaxAttempts: 3
+                    Catch:
+                      - ErrorEquals: [NumberIsTooBig]
+                        Next: DoubleBigNumber
+                  DoubleBigNumber:
+                    Type: Task
+                    Resource: !GetAtt doubleBigNumber.Arn
+                    End: true

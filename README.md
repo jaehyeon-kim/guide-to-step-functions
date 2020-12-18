@@ -49,4 +49,5 @@ Invoke step function
 sls invoke stepf --name hello --data '{"name": "jaehyeon"}'
 sls invoke stepf --name function-chaining --data '{"x": 42, "y": 13}'
 sls invoke stepf --name function-branching --data '{"x": 42, "y": 13}'
+sls invoke stepf --name parallel-tasks --data '{"x": 42, "y": 13}'
 ```
