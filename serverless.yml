@@ -12,6 +12,10 @@ provider:
 functions:
   hello:
     handler: handler.hello
+  add:
+    handler: handler.add
+  double:
+    handler: handler.double
 
 stepFunctions:
   stateMachines:
@@ -24,4 +28,18 @@ stepFunctions:
           SayHello:
             Type: Task
             Resource: !GetAtt hello.Arn
+            End: true
+    simple-maths:
+      name: simple-maths
+      definition:
+        Comment: example to demonstrate function chaining
+        StartAt: Add
+        States:
+          Add:
+            Type: Task
+            Resource: !GetAtt add.Arn
+            Next: Double
+          Double:
+            Type: Task
+            Resource: !GetAtt double.Arn
             End: true

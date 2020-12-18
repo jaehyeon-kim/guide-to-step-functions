@@ -47,4 +47,5 @@ Invoke step function
 ```sh
 # sls invoke stepf --name <stepfunctionname> --data '{"foo":"bar"}'
 sls invoke stepf --name hello --data '{"name": "jaehyeon"}'
+sls invoke stepf --name simple-maths --data '{"x": 42, "y": 13}'
 ```
