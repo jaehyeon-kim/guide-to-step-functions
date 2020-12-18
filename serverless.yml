@@ -16,6 +16,8 @@ functions:
     handler: handler.add
   double:
     handler: handler.double
+  doubleBigNumber:
+    handler: handler.doubleBigNumber
 
 stepFunctions:
   stateMachines:
@@ -44,7 +46,22 @@ stepFunctions:
             Resource: !GetAtt double.Arn
             End: true
             Retry:
+              - ErrorEquals: [NumberIsSoBig]
+                MaxAttempts: 0
               - ErrorEquals: [NumberIsTooBig]
                 MaxAttempts: 0
               - ErrorEquals: [States.ALL]
                 MaxAttempts: 3
+            Catch:
+              - ErrorEquals: [NumberIsSoBig]
+                Next: DefaultResponse
+              - ErrorEquals: [NumberIsTooBig]
+                Next: DoubleBigNumber
+          DoubleBigNumber:
+            Type: Task
+            Resource: !GetAtt doubleBigNumber.Arn
+            End: true
+          DefaultResponse:
+            Type: Pass
+            Result: 42
+            End: true
